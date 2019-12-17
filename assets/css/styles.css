@@ -1,0 +1,76 @@
+body,
+.lovetura-contact-form {
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+.iti.iti--allow-dropdown { width: 100%; }
+
+.lovetura-contact-form .btn-lovetura {
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 1);
+    background-color: rgba(183, 5, 95, 1);
+    border: 2px solid rgba(183, 5, 95, 0);
+    border-color: rgba(183, 5, 95, 1);
+    font-size: 12px;
+    letter-spacing: 3.0px;
+    line-height: 1.8;
+    padding: 12px 26px;
+    transition: 0.3s;
+}
+
+.lovetura-contact-form .btn:hover {
+    color: rgba(255, 255, 255, 1);
+    border: 2px solid rgba(20, 40, 80, 0);
+    background-color: rgba(137, 5, 72, 1);
+    text-decoration: none;
+}
+
+.lovetura-contact-form .text-wa {
+    text-align: right;
+}
+
+.lovetura-contact-form input[type="date"] {
+    position: relative;
+}
+
+/* create a new arrow, because we are going to mess up the native one
+see "List of symbols" below if you want another, you could also try to add a font-awesome icon.. */
+.lovetura-contact-form input[type="date"]:after {
+    content: "\25BC";
+    color: #555;
+    padding: 0 5px;
+}
+
+@media only screen and (max-width: 768px) {
+    .lovetura-contact-form input[type="date"]:after {
+        display: none;
+    }    
+}
+
+/* change color of symbol on hover */
+.lovetura-contact-form input[type="date"]:hover:after {
+    color: #666;
+}
+
+/* make the native arrow invisible and stretch it over the whole field so you can click anywhere in the input field to trigger the native datepicker*/
+.lovetura-contact-form input[type="date"]::-webkit-calendar-picker-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    height: auto;
+    color: transparent;
+    background: transparent;
+}
+
+/* adjust increase/decrease button */
+.lovetura-contact-form input[type="date"]::-webkit-inner-spin-button {
+    z-index: 1;
+}
+
+ /* adjust clear button */
+ .lovetura-contact-form input[type="date"]::-webkit-clear-button {
+    z-index: 1;
+}
