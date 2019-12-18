@@ -1,5 +1,8 @@
 <?php
-namespace LOVETURACONTACT;
+namespace LoveturaContact;
+
+use LoveturaContact\Validate\LoveturaValidate;
+use LoveturaContact\Submission\LoveturaSubmit;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -12,15 +15,16 @@ if ( ! defined( 'ABSPATH' ) ) {
  * class registers and all the components required to run the plugin.
  * @since 1.0.0
  */
- class LoveturaContact {
-/**
+  class LoveturaContact {
+
+ /**
  * The unique identifier of this plugin
  *
  * @since 1.0.0
  * @access protected
  * @var string $FabsitesListingsRets The string used to uniquely identify this plugin.
  */
- protected $LoveturaContact;
+  protected $LoveturaContact;
 
  /**
   * The current version of the plugin
@@ -86,7 +90,7 @@ if ( ! defined( 'ABSPATH' ) ) {
    /**
     * Plugin Constructor.
     *
-    * Initializing Fabsite Listing RETS plugin.
+    * Initializing Lovetura Contact plugin.
     *
     * @since 1.3.0
     * @access private
@@ -98,24 +102,42 @@ if ( ! defined( 'ABSPATH' ) ) {
 
         $this->includes();
         $this->load_textdomain();
+        $this->define_lovetura_hooks();
 
         add_action( 'wp_enqueue_scripts', [ $this, 'lovecontact_scripts'] );
         add_action( 'wp_enqueue_scripts', [ $this, 'lovecontact_styles'] );
         add_shortcode( 'lovetura-contact', [ $this, 'contact_form_shortcode' ] );
-        add_action( 'wp_ajax_send_info', [ $this, 'lovesend_email' ] );
-        add_action( 'wp_ajax_nopriv_send_info', [ $this, 'lovesend_email' ] );
     }
 
-    /**
-     * Loads the globally required Files for the Plugin.
-     * 
-     * Includes validation
-     * 
-     * @since 1.0.1
-     * @access private
-     */
-    public function includes() {
+  /**
+   * Loads the globally required Files for the Plugin.
+   * 
+   * Includes validation
+   * 
+   * @since 1.0.1
+   * @access private
+   */
+   public function includes() {
+        require_once LOVETURACONTACT_PATH . 'includes/validation.php';
+        require_once LOVETURACONTACT_PATH . 'includes/submission.php';
+   }
 
+   /**
+    * Register all of the hooks related to the functionality
+    * of the plugin
+    *
+    * @since 1.0.1
+    * @access public
+    */
+    private function define_lovetura_hooks() {
+        $lovec_val = new LoveturaValidate();
+        $lovec_sub = new LoveturaSubmit();
+
+        add_action( 'wp_ajax_send_info', [ $lovec_val, 'validate_data' ] );
+        add_action( 'wp_ajax_nopriv_send_info', [ $lovec_val, 'validate_data' ] );
+
+        add_action( 'wp_ajax_send_email', [ $lovec_sub, 'sendLoveturaEmail' ] );
+        add_action( 'wp_ajax_nopriv_send_email', [ $lovec_sub, 'sendLoveturaEmail' ] );
     }
 
    /**
@@ -178,16 +200,13 @@ if ( ! defined( 'ABSPATH' ) ) {
         return $output;
     }
 
+    
     public function lovesend_email() {
         check_ajax_referer( 'loveturaoutput', 'nonce' );
 
-        $name = isset($_POST['name']) ? $_POST['name'] : '';
-        $email = isset($_POST['email']) ? $_POST['email'] : '';
-        $edad = isset($_POST['edad']) ? $_POST['edad'] : '';
-        $whatsapp = isset($_POST['whatsapp']) ? $_POST['whatsapp'] : '';
-        $fecha_sesion = isset($_POST['fechasesion']) ? $_POST['fechasesion'] : '';
-        $sesion = isset($_POST['sesion']) ? $_POST['sesion'] : '';
-        $message = isset($_POST['mensage']) ? $_POST['mensage'] : '';
+        echo '<pre>';					
+					print_r( $_POST );
+                echo '</pre>';
 
         wp_die();
     }
