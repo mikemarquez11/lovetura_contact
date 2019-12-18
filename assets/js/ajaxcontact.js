@@ -3,14 +3,14 @@
     "use strict";
 
     const form = {
-        messages: document.getElementById('form-messages')
+        messages: document.getElementById('form-messages'),
     };
     
     $("#mobile-number").intlTelInput({
         autoHideDialCode: true,
         preferredCountries: ["us","mx","pe","ve","co","cl","ar" ],
         nationalMode: false,
-        utilsScript: utils_path.utils_js
+        utilsScript: utils_path.utils_js,
     });
 
     bootstrapValidate('#name', 'min:5:Ingresa tu nombre completo');
@@ -45,6 +45,7 @@
 
     function handleResponse(responseObject) {
         if ( responseObject.validate && responseObject.messages == 'Success' ) {
+            clearLog();
             prepareEmailWP(responseObject.data);
         } else {
             while (form.messages.firstChild) {
@@ -72,8 +73,9 @@
             data: data,
             method: 'POST',
             success: function(serverResponse) {
-               console.log(serverResponse);
-               clearLog();
+                document.getElementById("ajaxcontactform").reset();
+                console.log(serverResponse);
+                $("#ajaxresponsesuccess").append("<h4>Tu mensaje fue enviado exitosamente, gracias</h4>");
             },
             error: function(serverResponse) {
                 console.log(serverResponse);
