@@ -1,21 +1,46 @@
 <?php
 
-namespace LovetureValidate;
+namespace LoveturaContact\Validate;
 /**
  * Helper file for validation
  */
-class Lovetura_Validate{
+class LoveturaValidate {
 
-    public function lovesend_email() {
+    protected $fields = array('name', 'email', 'edad', 'whatsapp', 'fechasesion', 'sesion', 'mensaje'); 
+
+    public function validate_data() {
         check_ajax_referer( 'loveturaoutput', 'nonce' );
 
-        $name = isset($_POST['name']) ? $_POST['name'] : '';
-        $email = isset($_POST['email']) ? $_POST['email'] : '';
-        $edad = isset($_POST['edad']) ? $_POST['edad'] : '';
-        $whatsapp = isset($_POST['whatsapp']) ? $_POST['whatsapp'] : '';
-        $fecha_sesion = isset($_POST['fechasesion']) ? $_POST['fechasesion'] : '';
-        $sesion = isset($_POST['sesion']) ? $_POST['sesion'] : '';
-        $message = isset($_POST['mensage']) ? $_POST['mensage'] : '';
+        foreach( $this->fields as $field ) {
+            $data[$field] = isset( $_POST[$field]) ? $_POST[$field] : '';
+        }
+
+        $validate = true;
+        $error_messages = array();
+
+        foreach( $data as $dat => $value ) {
+            if ( ! isset( $value ) || empty( $value ) ){
+                $validate = false;
+                $error_messages[] = "$dat es requerido";
+            }
+        }
+        
+        if( ! is_email( $data['email'] ) ) {
+            $validate = false;
+            $error_messages[] = 'Ingresa un email valido';
+        }
+
+        if ($validate){ 
+            $error_messages[] = 'Success';
+        }
+
+        echo json_encode(
+            array(
+                'validate' => $validate,
+                'messages' => $error_messages,
+                'data' => $data
+            )
+        );
 
         wp_die();
     }
