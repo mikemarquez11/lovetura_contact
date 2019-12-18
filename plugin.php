@@ -135,6 +135,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
         add_action( 'wp_ajax_send_info', [ $lovec_val, 'validate_data' ] );
         add_action( 'wp_ajax_nopriv_send_info', [ $lovec_val, 'validate_data' ] );
+        add_filter( 'wp_mail_content_type', [ $lovec_sub, 'lc_mail_content_type'] );
 
         add_action( 'wp_ajax_send_email', [ $lovec_sub, 'sendLoveturaEmail' ] );
         add_action( 'wp_ajax_nopriv_send_email', [ $lovec_sub, 'sendLoveturaEmail' ] );
@@ -161,12 +162,21 @@ if ( ! defined( 'ABSPATH' ) ) {
         wp_register_script( 'lc-intTelInput', plugins_url('assets/js/intlTelInput-jquery.min.js', __FILE__), array( 'jquery' ), LOVETURACONTACT_VERSION, true );
         // Ajax Handler
         wp_register_script( 'lc-ajax', plugins_url('assets/js/ajaxcontact.js', __FILE__), array( 'jquery' ), LOVETURACONTACT_VERSION, true );
+        // Date input Polyfill
+        wp_register_script( 'lc-polyfill', plugins_url('assets/js/date-input-polyfill.dist.js', __FILE__), array( 'jquery' ), '1.14.7', true );
         // Localize the script with the new data
         $utils_path = array(
             'utils_js' => plugins_url('assets/js/utils.js', __FILE__),
             'ajax_url' => admin_url( 'admin-ajax.php' ) 
         );
         wp_localize_script( 'lc-ajax', 'utils_path', $utils_path );
+
+        wp_enqueue_script( 'lc-popper' );
+        wp_enqueue_script( 'lc-bootstrap' );
+        wp_enqueue_script( 'lc-boot-validate' );
+        wp_enqueue_script( 'lc-intTelInput' );
+        wp_enqueue_script( 'lc-ajax' );
+        wp_enqueue_script( 'lc-polyfill' );
     }
 
     public function lovecontact_styles() {
@@ -177,11 +187,6 @@ if ( ! defined( 'ABSPATH' ) ) {
          // CSS Styling
          wp_register_style( 'lc-styles', plugins_url('assets/css/styles.css', __FILE__), array(), LOVETURACONTACT_VERSION);
  
-         wp_enqueue_script( 'lc-popper' );
-         wp_enqueue_script( 'lc-bootstrap' );
-         wp_enqueue_script( 'lc-boot-validate' );
-         wp_enqueue_script( 'lc-intTelInput' );
-         wp_enqueue_script( 'lc-ajax' );
          wp_enqueue_style( 'lc-bootstrap' );
          wp_enqueue_style( 'lc-intlTelInput' );
          wp_enqueue_style( 'lc-styles' );
@@ -198,17 +203,6 @@ if ( ! defined( 'ABSPATH' ) ) {
         $output = ob_get_contents();
         ob_end_clean();
         return $output;
-    }
-
-    
-    public function lovesend_email() {
-        check_ajax_referer( 'loveturaoutput', 'nonce' );
-
-        echo '<pre>';					
-					print_r( $_POST );
-                echo '</pre>';
-
-        wp_die();
     }
     
  }
