@@ -1,6 +1,10 @@
 (function($) {
 
     "use strict";
+
+    const form = {
+        messages: document.getElementById('form-messages')
+    };
     
     $("#mobile-number").intlTelInput({
         autoHideDialCode: true,
@@ -16,8 +20,6 @@
     $('#ajaxcontactform').submit( function( event ) {
         event.preventDefault(); // Prevent the default form submit.
 
-        $('#hiddenAJAXAction').val('send_info');
-
         var data = $(".info-form :input")
         .serialize();
 
@@ -26,15 +28,64 @@
         $.ajax({
             url: utils_path.ajax_url,
             data: data,
+            action: 'send_info',
             method: 'POST',
             success: function(serverResponse) {
-                console.log('success');
+                if (serverResponse) {
+                    var responseObject = JSON.parse(serverResponse);
+                    handleResponse(responseObject);
+                }
             },
             error: function(serverResponse) {
-                console.log('error');
+                console.log(serverResponse);
             }
         });
 
     });
+
+    function handleResponse(responseObject) {
+        if ( responseObject.validate && responseObject.messages == 'Success' ) {
+            prepareEmailWP(responseObject.data);
+        } else {
+            while (form.messages.firstChild) {
+                form.messages.removeChild(form.messages.firstChild);
+            }
+
+            responseObject.messages.forEach((message) => {
+            const li = document.createElement('li');
+            li.textContent = message; 
+            form.messages.appendChild(li);
+            });
+                
+            form.messages.style.display = "block";
+        }
+    }
+
+    function prepareEmailWP(dataEmail) {
+
+        var action = { 'action': 'send_email' };
+
+        var data = $.param(dataEmail) + '&' + $.param(action);
+
+        $.ajax({
+            url: utils_path.ajax_url,
+            data: data,
+            method: 'POST',
+            success: function(serverResponse) {
+               console.log(serverResponse);
+               clearLog();
+            },
+            error: function(serverResponse) {
+                console.log(serverResponse);
+            }
+        });
+    }
+
+    function clearLog() {
+        while (form.messages.firstChild) {
+            form.messages.removeChild(form.messages.firstChild);
+            form.messages.style.display = "none";
+        }
+    }
 
 })(jQuery);
