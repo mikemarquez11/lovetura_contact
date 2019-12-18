@@ -16,7 +16,10 @@ class LoveturaSubmit {
 
         if ( isset( $_POST['mensaje'] ) ) { 
             $to = 'mimarle_elmejor@hotmail.com';
-            $headers = 'From: ' . $_POST['name'] . ' <"' . $_POST['email'] . '">';
+            $headers  = 'MIME-Version: 1.0' . "\r\n";
+            $headers .= 'Content-Type: text/html; charset=ISO-8859-1' . "\r\n";
+            $headers .= 'From: abc@gmail.com' . "\r\n";
+            //$headers .= 'From: ' . $_POST['name'] . ' <"' . $_POST['email'] . '">';
             $subject = "lovetura.com | New Message from " . $_POST['name'];
             $message = $_POST['mensaje'];
 
@@ -42,11 +45,15 @@ class LoveturaSubmit {
                 echo 'Mail not Sent';
             }
        
-        //exit();
+        exit();
 
         wp_die();
     }
 }
+
+    public function lc_mail_content_type(){
+        return "text/html";    
+    }
 
 }
 ?>
