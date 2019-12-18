@@ -30,6 +30,11 @@ class LoveturaValidate {
             $error_messages[] = 'Ingresa un email valido';
         }
 
+        if( ! $this->checkDateFormat( $data['fechasesion'] ) ) {
+            $validate = false;
+            $error_messages[] = 'Ingresa una fecha valida aaaa-mm-dd';
+        }
+
         if ($validate){ 
             $error_messages[] = 'Success';
         }
@@ -44,5 +49,27 @@ class LoveturaValidate {
 
         wp_die();
     }
+
+    /**
+     * check for date-format
+     *
+     * @param string $date valid is only "YYYY-MM-DD"
+     *
+     * @return bool
+    */
+    function checkDateFormat($date) {
+    // match the format of the date
+    if (preg_match ("/^([0-9]{4})-([0-9]{2})-([0-9]{2})$/", $date, $parts)) {
+        // check whether the date is valid or not
+        if (checkdate($parts[2],$parts[3],$parts[1])) {
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+  }
+}
+
 }
 ?>
