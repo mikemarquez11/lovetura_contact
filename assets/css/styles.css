@@ -33,6 +33,17 @@ body,
     position: relative;
 }
 
+.lovetura-contact-form #form-messages {
+    background-color: rgb(255, 232, 232);
+    border: 1px groove red;
+    color: red;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 10px 25px;
+    width: 60%;
+    display: none;
+}
+
 /* create a new arrow, because we are going to mess up the native one
 see "List of symbols" below if you want another, you could also try to add a font-awesome icon.. */
 .lovetura-contact-form input[type="date"]:after {
