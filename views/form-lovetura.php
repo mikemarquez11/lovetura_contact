@@ -2,7 +2,7 @@
     $ajax_nonce = wp_create_nonce( 'loveturaoutput' ); 
 ?>
 <div class="lovetura-contact-form" id="lovetura-contact">
-    <form class="info-form" id="ajaxcontactform">
+    <form class="info-form" id="ajaxcontactform" autocomplete="on">
     <div class="form-row">
         <div class="form-group col-sm-12 col-md-6">
             <input type="text" name="name" class="form-control" id="name" placeholder="Nombre" required autocomplete="name" maxlength="28">

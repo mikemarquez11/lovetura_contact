@@ -3,7 +3,7 @@
  * Plugin Name: Lovetura Contact Form
  * Description: Lovetura Submit Contact Form
  * Author: Lovetura
- * Version: 1.0.0
+ * Version: 1.0.2
  */
 
 //Exit if accessed directly
