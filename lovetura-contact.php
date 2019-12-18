@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-define( 'LOVETURACONTACT_VERSION', '1.0.1' );
+define( 'LOVETURACONTACT_VERSION', '1.0.2' );
 define( 'LOVETURACONTACT_STABLE_VERSION', '1.0.0' );
 
 define( 'LOVETURACONTACT__FILE__', __FILE__ );
