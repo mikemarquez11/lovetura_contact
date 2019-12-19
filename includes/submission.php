@@ -4,6 +4,8 @@ namespace LoveturaContact\Submission;
 
 class LoveturaSubmit {
 
+    protected $submitted, $message;
+
     /**
     * Submission of data.
     *
@@ -17,32 +19,53 @@ class LoveturaSubmit {
         if ( isset( $_POST['mensaje'] ) ) { 
             $to = 'mimarle_elmejor@hotmail.com';
             $headers  = 'MIME-Version: 1.0' . "\r\n";
-            $headers .= 'Content-Type: text/html; charset=ISO-8859-1' . "\r\n";
-            $headers .= 'From: abc@gmail.com' . "\r\n";
-            //$headers .= 'From: ' . $_POST['name'] . ' <"' . $_POST['email'] . '">';
-            $subject = "lovetura.com | New Message from " . $_POST['name'];
-            $message = $_POST['mensaje'];
+            $headers .= array('Content-Type: text/html; charset=UTF-8');
+            $headers .= 'From: ' . $_POST['name'] . ' <"' . $_POST['email'] . '">';
+            $subject = "Consulta lovetura.com | New Message from " . $_POST['name'];
+            //$message = $_POST['mensaje'];
 
-            /*ob_start();
+            ob_start();
            
-            echo '
+            echo '<p>Nombre: ' . $_POST['name'] . '</p>
+                <p>E-mail: ' . $_POST['email'] . '</p>
+                <p>Edad: ' . $_POST['edad'] . '</p>
+                <p>Whatsapp: ' . $_POST['whatsapp'] . '</p>
+                <p>Fecha: ' . $_POST['fechasesion'] . '</p>
+                <p>Sesion: ' . $_POST['sesion'] . '</p>
                 <h2>Message:</h2>' .
                 wpautop($_POST['message']) . '
                 <br />
                 --
-                <p><a href = "' . home_url() . '">www.carlofontanos.com</a></p>
+                <p><a href = "' . home_url() . '">lovetura.com</a></p>
             ';
            
             $message = ob_get_contents();
            
-            ob_end_clean();*/
+            ob_end_clean();
 
             $mail = wp_mail($to, $subject, $message, $headers);
            
             if ( $mail ) {
-                echo 'Mail Sent';
+                $this->submitted = true;
+                $this->$message = 'Mail Sent';
+
+                echo json_encode(
+                    array(
+                        'submitted' => $this->submitted,
+                        'message' => $this->$message,
+                    )
+                );
+
             } else {
-                echo 'Mail not Sent';
+                $this->submitted = false;
+                $this->$message = 'Mail Not Sent';
+
+                echo json_encode(
+                    array(
+                        'submitted' => $this->submitted,
+                        'message' => $this->$message,
+                    )
+                );
             }
        
         exit();
