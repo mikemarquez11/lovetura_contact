@@ -3,6 +3,7 @@
     "use strict";
 
     const form = {
+        erroralert: document.getElementById('ajaxresponseerror'),
         messages: document.getElementById('form-messages'),
     };
     
@@ -73,14 +74,27 @@
             data: data,
             method: 'POST',
             success: function(serverResponse) {
-                document.getElementById("ajaxcontactform").reset();
-                console.log(serverResponse);
-                $("#ajaxresponsesuccess").append("<h4>Tu mensaje fue enviado exitosamente, gracias</h4>");
+                if ( serverResponse ) {
+                    console.log(serverResponse);
+                    var responseObject = JSON.parse(serverResponse);
+                    handleResponseEmail(responseObject);            
+                }
             },
             error: function(serverResponse) {
                 console.log(serverResponse);
             }
         });
+    }
+
+    function handleResponseEmail(responseObject) {
+        if ( responseObject.submitted ) {
+            form.erroralert.remove();
+            document.getElementById("ajaxcontactform").reset();
+            $("#ajaxresponsesuccess").append("<h4>Tu mensaje ha sido enviado con éxito</h4>");
+        }
+        else if ( ! responseObject.submitted ) {
+            $("#ajaxresponseerror").append("<h4>Algo salio mal, intenta de nuevo más tarde</h4>");
+        }
     }
 
     function clearLog() {
