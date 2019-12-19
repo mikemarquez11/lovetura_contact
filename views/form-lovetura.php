@@ -48,9 +48,8 @@
         <!-- Response's Messages -->
         <ul id="form-messages">
         </ul>
- 
-        <div id="ajaxresponsesuccess" name="ajaxresponsesuccess" class="div-success"></div>
-        <div id="ajaxresponseerror" name="ajaxresponseerror" class="div-error"></div>
     </div>
     </form>
+    <div id="ajaxresponsesuccess" name="ajaxresponsesuccess" class="div-success"></div>
+    <div id="ajaxresponseerror" name="ajaxresponseerror" class="div-error"></div>
 </div>
