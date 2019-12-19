@@ -33,7 +33,7 @@ class LoveturaSubmit {
                 <p>Fecha: ' . $_POST['fechasesion'] . '</p>
                 <p>Sesion: ' . $_POST['sesion'] . '</p>
                 <h2>Message:</h2>' .
-                wpautop($_POST['message']) . '
+                wpautop($_POST['mensaje']) . '
                 <br />
                 --
                 <p><a href = "' . home_url() . '">lovetura.com</a></p>
