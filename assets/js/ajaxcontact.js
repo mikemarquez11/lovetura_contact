@@ -24,7 +24,7 @@
         var data = $(".info-form :input")
         .serialize();
 
-        console.log(data);
+        //console.log(data);
 
         $.ajax({
             url: utils_path.ajax_url,
@@ -75,7 +75,7 @@
             method: 'POST',
             success: function(serverResponse) {
                 if ( serverResponse ) {
-                    console.log(serverResponse);
+                    //console.log(serverResponse);
                     var responseObject = JSON.parse(serverResponse);
                     handleResponseEmail(responseObject);            
                 }
