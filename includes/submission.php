@@ -22,7 +22,6 @@ class LoveturaSubmit {
             $headers .= array('Content-Type: text/html; charset=UTF-8');
             $headers .= 'From: ' . $_POST['name'] . ' <"' . $_POST['email'] . '">';
             $subject = "Consulta lovetura.com | New Message from " . $_POST['name'];
-            //$message = $_POST['mensaje'];
 
             ob_start();
            
