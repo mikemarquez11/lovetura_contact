@@ -17,7 +17,7 @@ class LoveturaSubmit {
     public function sendLoveturaEmail() {
 
         if ( isset( $_POST['mensaje'] ) ) { 
-            $to = 'mimarle_elmejor@hotmail.com';
+            $to = get_option('lovetura_email');
             $headers  = 'MIME-Version: 1.0' . "\r\n";
             $headers .= array('Content-Type: text/html; charset=UTF-8');
             $headers .= 'From: ' . $_POST['name'] . ' <"' . $_POST['email'] . '">';
