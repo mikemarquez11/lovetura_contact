@@ -1,3 +1,11 @@
+<?php
+/**
+ * Admin Page View
+ * 
+ * Template
+ */
+$sesiones = get_option('sesiones');
+?>
 <div class="wrap">
 <style>
     * { font-family:Arial; }
@@ -34,10 +42,20 @@ input { padding:5px; border:1px solid #999; border-radius:4px; -moz-border-radiu
                 <td>
                 <button class="button button-primary" id="addScnt">+</button>
                 <div id="p_scents">
+                <?php $num_sessions = sizeof($sesiones);
+                    for ( $i=0; $i<=$num_sessions - 1; $i++ ) {
+                        ?>
                     <p>
                     <label for="p_scnts">
-                    <input type="text" id="p_scnt" size="20" name="sesiones[0]" value="<?php echo get_option('sesiones[0]'); ?>" placeholder="Ingresa Sesion"/></label>
+                        <input type="text" id="p_scnt" size="20" name="sesiones[<?php echo $i; ?>]" value="<?php echo $sesiones[$i]; ?>" placeholder="Ingresa Sesion"/></label>
+                        <?php if ( $i > 0 ) { ?>
+                        <button class="button button-primary" id="remScnt">X</button>
+                        <?php } ?>
+                    <!--<input type="text" id="p_scnt" size="20" name="sesiones[0]" value="<?php echo $sesiones[0]; ?>" placeholder="Ingresa Sesion"/></label>-->
                     </p>
+                    <?php
+                    }
+                    ?>
                 </div>
                 </td>
             </tr>
