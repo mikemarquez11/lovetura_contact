@@ -23,15 +23,15 @@
     </div>
     <div class="form-row">
         <div class="form-group col-sm-12 col-md-6">
-            <input type="date" class="form-control" id="startSesion" name="fechasesion" required>
-        </div>
-        <div class="form-group col-sm-12 col-md-6">
             <select id="inputServicio" class="form-control" name="sesion" required>
                 <option value="" disabled selected>Elige tu sesion</option>
                 <option value="ProcesosdeSeduccion">Procesos de Seducción</option>
                 <option value="ColonizadorLiberado">Colonizador Liberado</option>
                 <option value="DescolonizacionEmocional">Descolonización Emocional</option>
             </select>
+        </div>
+        <div class="form-group col-sm-12 col-md-6">
+            <input type="date" class="form-control" id="startSesion" name="fechasesion" required>
         </div>
     </div>
 
