@@ -1,5 +1,6 @@
 <?php
-    $ajax_nonce = wp_create_nonce( 'loveturaoutput' ); 
+    $ajax_nonce = wp_create_nonce( 'loveturaoutput' );
+    $sesiones_form = get_option('sesiones');
 ?>
 <div class="lovetura-contact-form" id="lovetura-contact">
     <form class="info-form" id="ajaxcontactform" autocomplete="on">
@@ -25,9 +26,12 @@
         <div class="form-group col-sm-12 col-md-6">
             <select id="inputServicio" class="form-control" name="sesion" required>
                 <option value="" disabled selected>Elige tu sesion</option>
-                <option value="ProcesosdeSeduccion">Procesos de Seducción</option>
-                <option value="ColonizadorLiberado">Colonizador Liberado</option>
-                <option value="DescolonizacionEmocional">Descolonización Emocional</option>
+                <?php
+                    $num_se = sizeof($sesiones_form);
+                    for ( $i=0; $i<=$num_se - 1; $i++ ) {
+                ?>
+                    <option value="<?php echo $sesiones_form[$i]; ?>"><?php echo $sesiones_form[$i]; ?></option>
+                    <?php } ?>
             </select>
         </div>
         <div class="form-group col-sm-12 col-md-6">

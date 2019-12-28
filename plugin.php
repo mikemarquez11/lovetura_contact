@@ -3,6 +3,7 @@ namespace LoveturaContact;
 
 use LoveturaContact\Validate\LoveturaValidate;
 use LoveturaContact\Submission\LoveturaSubmit;
+use LoveturaContact\Admin\LoveturaAdmin;
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
@@ -118,6 +119,7 @@ if ( ! defined( 'ABSPATH' ) ) {
    * @access private
    */
    public function includes() {
+        require_once LOVETURACONTACT_PATH . 'admin/lovetura-admin.php';
         require_once LOVETURACONTACT_PATH . 'includes/validation.php';
         require_once LOVETURACONTACT_PATH . 'includes/submission.php';
    }
@@ -130,9 +132,17 @@ if ( ! defined( 'ABSPATH' ) ) {
     * @access public
     */
     private function define_lovetura_hooks() {
+        $lovec_page = new LoveturaAdmin();
         $lovec_val = new LoveturaValidate();
         $lovec_sub = new LoveturaSubmit();
 
+        add_action( 'admin_enqueue_scripts', [ $lovec_page, 'register_admin_lovescripts' ] );
+        add_action( 'admin_enqueue_scripts', [ $lovec_page, 'load_lovetura_scripts' ] );
+        add_action( 'admin_menu', [ $lovec_page, 'lovetura_admin_menu'] );
+        // Add Settings and Fields
+    	add_action( 'admin_init', array( $lovec_page, 'register_options' ) );
+    	//add_action( 'admin_init', array( $lovec_page, 'setup_fields' ) );
+        
         add_action( 'wp_ajax_send_info', [ $lovec_val, 'validate_data' ] );
         add_action( 'wp_ajax_nopriv_send_info', [ $lovec_val, 'validate_data' ] );
         add_filter( 'wp_mail_content_type', [ $lovec_sub, 'lc_mail_content_type'] );
