@@ -3,7 +3,7 @@
  * Plugin Name: Lovetura Contact Form
  * Description: Lovetura Submit Contact Form
  * Author: Lovetura
- * Version: 1.0.3
+ * Version: 1.0.4
  */
 
 //Exit if accessed directly
@@ -11,8 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-define( 'LOVETURACONTACT_VERSION', '1.0.3' );
-define( 'LOVETURACONTACT_STABLE_VERSION', '1.0.0' );
+define( 'LOVETURACONTACT_VERSION', '1.0.4' );
+define( 'LOVETURACONTACT_STABLE_VERSION', '1.0.3' );
 
 define( 'LOVETURACONTACT__FILE__', __FILE__ );
 define( 'LOVETURACONTACT_PLUGIN_BASE', plugin_basename( LOVETURACONTACT__FILE__ ) );
