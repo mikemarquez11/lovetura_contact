@@ -140,7 +140,8 @@ if ( ! defined( 'ABSPATH' ) ) {
         add_action( 'admin_enqueue_scripts', [ $lovec_page, 'load_lovetura_scripts' ] );
         add_action( 'admin_menu', [ $lovec_page, 'lovetura_admin_menu'] );
         // Add Settings and Fields
-    	add_action( 'admin_init', array( $lovec_page, 'register_options' ) );
+        add_action( 'admin_init', array( $lovec_page, 'register_options' ) );
+        add_action( 'admin_init', array( $lovec_page, 'register_date_options' ) );
     	//add_action( 'admin_init', array( $lovec_page, 'setup_fields' ) );
         
         add_action( 'wp_ajax_send_info', [ $lovec_val, 'validate_data' ] );
@@ -172,8 +173,10 @@ if ( ! defined( 'ABSPATH' ) ) {
         wp_register_script( 'lc-intTelInput', plugins_url('assets/js/intlTelInput-jquery.min.js', __FILE__), array( 'jquery' ), LOVETURACONTACT_VERSION, true );
         // Ajax Handler
         wp_register_script( 'lc-ajax', plugins_url('assets/js/ajaxcontact.js', __FILE__), array( 'jquery' ), LOVETURACONTACT_VERSION, true );
+        // datePicker Script
+        wp_register_script( 'ld-init', plugins_url('assets/js/datepicker-init.js', __FILE__), array( 'jquery' ), LOVETURACONTACT_VERSION, true );
         // Date input Polyfill
-        wp_register_script( 'lc-polyfill', plugins_url('assets/js/date-input-polyfill.dist.js', __FILE__), array( 'jquery' ), '1.14.7', true );
+        //wp_register_script( 'lc-polyfill', plugins_url('assets/js/date-input-polyfill.dist.js', __FILE__), array( 'jquery' ), '1.14.7', true );
         // Localize the script with the new data
         $utils_path = array(
             'utils_js' => plugins_url('assets/js/utils.js', __FILE__),
@@ -181,25 +184,37 @@ if ( ! defined( 'ABSPATH' ) ) {
         );
         wp_localize_script( 'lc-ajax', 'utils_path', $utils_path );
 
+        // Localize the script with the new dates
+        $lovedates_obj = array(
+            'unav_dates' => get_option('unadates')
+        );
+        wp_localize_script( 'ld-init', 'lovetura_dates', $lovedates_obj );
+
+        // jQuery UI Datepicker
+        wp_enqueue_script( 'jquery-ui-datepicker' );
         wp_enqueue_script( 'lc-popper' );
         wp_enqueue_script( 'lc-bootstrap' );
         wp_enqueue_script( 'lc-boot-validate' );
         wp_enqueue_script( 'lc-intTelInput' );
         wp_enqueue_script( 'lc-ajax' );
-        wp_enqueue_script( 'lc-polyfill' );
+        wp_enqueue_script( 'ld-init' );
+        //wp_enqueue_script( 'lc-polyfill' );
     }
 
     public function lovecontact_styles() {
-         // Bootstrap Stylesheet
-         wp_register_style( 'lc-bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', array(), '4.3.1');
-         // intlTelInput
-         wp_register_style( 'lc-intlTelInput', plugins_url('assets/css/intlTelInput.min.css', __FILE__), array(), LOVETURACONTACT_VERSION);
-         // CSS Styling
-         wp_register_style( 'lc-styles', plugins_url('assets/css/styles.css', __FILE__), array(), LOVETURACONTACT_VERSION);
+        // Bootstrap Stylesheet
+        wp_register_style( 'lc-bootstrap', 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', array(), '4.3.1');
+        // intlTelInput
+        wp_register_style( 'lc-intlTelInput', plugins_url('assets/css/intlTelInput.min.css', __FILE__), array(), LOVETURACONTACT_VERSION);
+        // jQuery UI
+        wp_register_style( 'jquery-ui', 'https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css', array(), '1.12.1');
+        // CSS Styling
+        wp_register_style( 'lc-styles', plugins_url('assets/css/styles.css', __FILE__), array(), LOVETURACONTACT_VERSION);
  
-         wp_enqueue_style( 'lc-bootstrap' );
-         wp_enqueue_style( 'lc-intlTelInput' );
-         wp_enqueue_style( 'lc-styles' );
+        wp_enqueue_style( 'lc-bootstrap' );
+        wp_enqueue_style( 'lc-intlTelInput' );
+        wp_enqueue_style( 'jquery-ui' );
+        wp_enqueue_style( 'lc-styles' );
     }
 
     public function lovetura_contact_form() {
