@@ -28,6 +28,7 @@ p { padding:0 0 5px 0; }
 input { padding:5px; border:1px solid #999; border-radius:4px; -moz-border-radius:4px; -web-kit-border-radius:4px; -khtml-border-radius:4px; }
 </style>
     <h1><?php esc_html_e( 'Lovetura Contact Form', 'lovetura-contact' ); ?></h1>
+    <?php var_dump($sesiones); ?>
     <form class="" action="options.php" method="post">
     <?php settings_fields('lovecontact_section'); 
     do_settings_sections('lovecontact_section'); ?>
@@ -42,18 +43,17 @@ input { padding:5px; border:1px solid #999; border-radius:4px; -moz-border-radiu
                 <td>
                 <button class="button button-primary" id="addScnt">+</button>
                 <div id="p_scents">
-                <?php $num_sessions = sizeof($sesiones);
-                    for ( $i=0; $i<=$num_sessions - 1; $i++ ) {
+                <?php $index = 0;
+                    foreach ( $sesiones as $sesion => $value ) {
                         ?>
                     <p>
                     <label for="p_scnts">
-                        <input type="text" id="p_scnt" size="20" name="sesiones[<?php echo $i; ?>]" value="<?php echo $sesiones[$i]; ?>" placeholder="Ingresa Sesion"/></label>
-                        <?php if ( $i > 0 ) { ?>
+                        <input type="text" id="p_scnt" size="20" name="sesiones[<?php echo esc_attr($sesion); ?>]" value="<?php echo esc_attr($value); ?>" placeholder="Ingresa Sesion"/></label>
+                        <?php if ( $index > 0 ) { ?>
                         <button class="button button-primary" id="remScnt">X</button>
                         <?php } ?>
-                    <!--<input type="text" id="p_scnt" size="20" name="sesiones[0]" value="<?php echo $sesiones[0]; ?>" placeholder="Ingresa Sesion"/></label>-->
                     </p>
-                    <?php
+                    <?php $index++;
                     }
                     ?>
                 </div>
