@@ -2,9 +2,42 @@
     $ajax_nonce = wp_create_nonce( 'loveturaoutput' );
     $sesiones_form = get_option('sesiones');
 ?>
+<style>
+
+.ui-datepicker td.bookable a.ui-state-default {
+    background-color: #54b796 !important;
+}
+
+.ui-datepicker td .ui-state-default {
+    text-align: center;
+}
+
+.ui-datepicker td.bookable a {
+    background-color: #2ecc71!important;
+    background-image: none!important;
+    border-color: rgba(0,0,0,.1)!important;
+    color: #fff!important;
+    text-shadow: 0 1px 0 rgba(0,0,0,.1);
+}
+
+.ui-datepicker td.fully_booked span {
+    background-color: #c0392b!important;
+    background-image: none!important;
+    border-color: rgba(0,0,0,.1)!important;
+    color: #fff!important;
+    text-shadow: 0 1px 0 rgba(0,0,0,.1);
+    text-decoration: line-through;
+    cursor: not-allowed;
+}
+
+.ui-datepicker td.ui-datepicker-today a, .ui-datepicker td.ui-datepicker-today span {
+    box-shadow: inset 0 0 0 3px rgba(0,0,0,.2);
+}
+
+</style>
 <div class="lovetura-contact-form" id="lovetura-contact">
     <form class="info-form" id="ajaxcontactform" autocomplete="on">
-    <div class="form-row">
+    <div class="form-row lt-session-form">
         <div class="form-group col-sm-12 col-md-6">
             <input type="text" name="name" class="form-control" id="name" placeholder="Nombre" required autocomplete="name" maxlength="28">
         </div>
@@ -27,15 +60,16 @@
             <select id="inputServicio" class="form-control" name="sesion" required>
                 <option value="" disabled selected>Elige tu sesion</option>
                 <?php
-                    $num_se = sizeof($sesiones_form);
-                    for ( $i=0; $i<=$num_se - 1; $i++ ) {
+                    foreach ( $sesiones_form as $sesion ) {
                 ?>
-                    <option value="<?php echo $sesiones_form[$i]; ?>"><?php echo $sesiones_form[$i]; ?></option>
+                    <option value="<?php echo $sesion; ?>"><?php echo $sesion; ?></option>
                     <?php } ?>
             </select>
         </div>
         <div class="form-group col-sm-12 col-md-6">
-            <input type="date" class="form-control" id="startSesion" name="fechasesion" required>
+        <fieldset class="lt-session-date-picker">
+            <input type="text" class="form-control" id="ui-datepicker" name="fechasesion" required>
+        </fieldset>
         </div>
     </div>
 
