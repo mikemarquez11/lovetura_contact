@@ -68,7 +68,7 @@
         </div>
         <div class="form-group col-sm-12 col-md-6">
         <fieldset class="lt-session-date-picker">
-            <input type="text" class="form-control" id="ui-datepicker" name="fechasesion" required>
+            <input type="text" class="form-control" id="ui-datepicker" name="fechasesion" placeholder="dd-mm-yyyy" required>
         </fieldset>
         </div>
     </div>

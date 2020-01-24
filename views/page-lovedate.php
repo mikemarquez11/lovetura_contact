@@ -20,7 +20,7 @@ $unadates = get_option('unadates');
 }
 </style>
     <h1><?php esc_html_e( 'Lovetura Date', 'lovetura-date' ); ?></h1>
-    <?php var_dump($unadates); ?>
+    <?php //var_dump($unadates); ?>
     <form class="" action="options.php" method="post">
     <?php settings_fields('lovedate_section'); 
     do_settings_sections('lovedate_section'); ?>

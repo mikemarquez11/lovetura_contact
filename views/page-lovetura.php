@@ -28,7 +28,7 @@ p { padding:0 0 5px 0; }
 input { padding:5px; border:1px solid #999; border-radius:4px; -moz-border-radius:4px; -web-kit-border-radius:4px; -khtml-border-radius:4px; }
 </style>
     <h1><?php esc_html_e( 'Lovetura Contact Form', 'lovetura-contact' ); ?></h1>
-    <?php var_dump($sesiones); ?>
+    <?php //var_dump($sesiones); ?>
     <form class="" action="options.php" method="post">
     <?php settings_fields('lovecontact_section'); 
     do_settings_sections('lovecontact_section'); ?>
