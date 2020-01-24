@@ -35,7 +35,7 @@ namespace LoveturaContact\Admin;
             'Lovetura Dates', 
             'manage_options',
             $this->lovedate_slug,
-            [ $this, 'admin_lovedate_contents' ],
+            [ $this, 'admin_lovedate_contents' ]
         );
 
         /*add_menu_page(

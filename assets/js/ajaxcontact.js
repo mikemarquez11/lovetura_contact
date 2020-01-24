@@ -11,7 +11,7 @@
         autoHideDialCode: true,
         preferredCountries: ["us","mx","pe","ve","co","cl","ar" ],
         nationalMode: false,
-        utilsScript: utils_path.utils_js,
+        utilsScript: utils_path.utils_js
     });
 
     bootstrapValidate('#name', 'min:5:Ingresa tu nombre completo');
