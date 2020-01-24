@@ -30,10 +30,10 @@ class LoveturaValidate {
             $error_messages[] = 'Ingresa un email valido';
         }
 
-        if( ! $this->checkDateFormat( $data['fechasesion'] ) ) {
+        /*if( ! $this->checkDateFormat( $data['fechasesion'] ) ) {
             $validate = false;
             $error_messages[] = 'Ingresa una fecha valida aaaa-mm-dd';
-        }
+        }*/
 
         if ($validate){ 
             $error_messages[] = 'Success';
