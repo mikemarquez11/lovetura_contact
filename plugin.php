@@ -211,7 +211,12 @@ if ( ! defined( 'ABSPATH' ) ) {
         // CSS Styling
         wp_register_style( 'lc-styles', plugins_url('assets/css/styles.css', __FILE__), array(), LOVETURACONTACT_VERSION);
  
-        wp_enqueue_style( 'lc-bootstrap' );
+        if ( function_exists( 'is_woocommerce' ) ) {
+            //dequeue scripts and styles
+            if ( ! is_woocommerce() && ! is_cart() && ! is_checkout() ) {
+                wp_enqueue_style( 'lc-bootstrap' );
+            }
+        }
         wp_enqueue_style( 'lc-intlTelInput' );
         wp_enqueue_style( 'jquery-ui' );
         wp_enqueue_style( 'lc-styles' );
